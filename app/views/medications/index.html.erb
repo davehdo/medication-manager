@@ -1,0 +1,23 @@
+<p id="notice"><%= notice %></p>
+
+
+<h2>My Medications</h2>
+	<table class="table table-hover">
+		<tr>
+	    <th>Name</th>
+	    <th>Dose</th>
+	    <th>Frequency</th>
+	    <th></th>
+	  </tr>
+	  
+	  <% @medications.each do |medication| %>
+      <tr>
+        <td><%= medication.name %></td>
+        <td><%= medication.dose %></td>
+        <td><%= medication.frequency %></td>
+        <td><%= link_to 'Edit', edit_medication_path(medication) %></td>
+      </tr>
+    <% end %>
+	</table>
+
+<%= link_to 'New Medication', new_medication_path, class: "btn btn-primary" %>
