@@ -12,7 +12,7 @@
 	  
 	  <% @medications.each do |medication| %>
       <tr>
-        <td><%= medication.name %></td>
+        <td><%= link_to medication.name, medication %></td>
         <td><%= medication.dose %></td>
         <td><%= medication.frequency %></td>
         <td><%= link_to 'Edit', edit_medication_path(medication) %></td>
