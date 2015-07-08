@@ -8,12 +8,12 @@
 
 <h3>Description</h3>
 <div class="well">
-  <%= @medication.description %>
+  <%= @medication.description.html_safe if @medication.description.present? %>
 </div>
 
 <h3>Side effects</h3>
 <div class="well">
-  <%= @medication.side_effects %>
+  <%= @medication.side_effects.html_safe if @medication.side_effects.present? %>
 </div>
 
 

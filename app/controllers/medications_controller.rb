@@ -26,6 +26,21 @@ class MedicationsController < ApplicationController
   def create
     @medication = Medication.new(medication_params)
 
+    if @medication.name.present?
+      drug_sections = MedlinePlus.find_drug_by_name(@medication.name)
+      # we expect drug to be an array of hashes [{title: "Title", body: "Body"}, ...]
+      
+      if drug_sections != nil
+        drug_sections.each do |section|
+          if section[:title] == "Why is this medication prescribed?"
+            @medication.description = section[:body]
+          elsif section[:title] == "What side effects can this medication cause?"
+            @medication.side_effects = section[:body]
+          end
+        end
+      end
+    end
+    
     respond_to do |format|
       if @medication.save
         format.html { redirect_to @medication, notice: 'Medication was successfully created.' }
@@ -40,6 +55,22 @@ class MedicationsController < ApplicationController
   # PATCH/PUT /medications/1
   # PATCH/PUT /medications/1.json
   def update
+    
+    if (@medication.description.blank? or @medication.side_effects.blank?) and @medication.name.present?
+      drug_sections = MedlinePlus.find_drug_by_name(@medication.name)
+      # we expect drug to be an array of hashes [{title: "Title", body: "Body"}, ...]
+      
+      if drug_sections != nil
+        drug_sections.each do |section|
+          if section[:title] == "Why is this medication prescribed?"
+            @medication.description = section[:body]
+          elsif section[:title] == "What side effects can this medication cause?"
+            @medication.side_effects = section[:body]
+          end
+        end
+      end
+    end
+
     respond_to do |format|
       if @medication.update(medication_params)
         format.html { redirect_to @medication, notice: 'Medication was successfully updated.' }
