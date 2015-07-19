@@ -1,0 +1,31 @@
+<p id="notice"><%= notice %></p>
+
+<h1>Listing Pressures</h1>
+
+<table>
+  <thead>
+    <tr>
+      <th>Systolic</th>
+      <th>Diastolic</th>
+      <th>Taken at</th>
+      <th colspan="3"></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @pressures.each do |pressure| %>
+      <tr>
+        <td><%= pressure.systolic %></td>
+        <td><%= pressure.diastolic %></td>
+        <td><%= pressure.taken_at %></td>
+        <td><%= link_to 'Show', pressure %></td>
+        <td><%= link_to 'Edit', edit_pressure_path(pressure) %></td>
+        <td><%= link_to 'Destroy', pressure, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+
+<%= link_to 'New Pressure', new_pressure_path %>
